@@ -7,25 +7,28 @@ import io.reactivex.Observable
 
 
 @Dao
-interface ProducerDao {
-
-    @Query("SELECT * FROM ProducerEntity")
-    fun producersStream(): Observable<List<CompleteProducerEntity>>
+abstract class ProducerDao {
 
     @Transaction
-    fun put(items: List<CompleteProducerEntity>): Completable = Completable
-        .fromAction {
-            items
-                .onEach {
-                    put(it.producer)
-                }
-                .flatMap { it.images }
-                .forEach { put(it) }
-        }
+    @Query("SELECT * FROM ProducerEntity")
+    abstract fun producersStream(): Observable<List<CompleteProducerEntity>>
+
+    fun putAsync(items: List<CompleteProducerEntity>): Completable = Completable
+        .fromAction { put(items) }
+
+    @Transaction
+    open fun put(items: List<CompleteProducerEntity>) {
+        items
+            .onEach {
+                put(it.producer)
+            }
+            .flatMap { it.images }
+            .forEach { put(it) }
+    }
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun put(dialog: ImageEntity): Long
+    abstract fun put(dialog: ImageEntity): Int
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun put(tag: ProducerEntity): Long
+    abstract fun put(tag: ProducerEntity): Int
 }

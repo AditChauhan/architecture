@@ -3,10 +3,10 @@ package com.example.beloo.foodnixtest.storage.image
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
 import com.example.beloo.foodnixtest.data.model.image.Image
 import com.example.beloo.foodnixtest.storage.ID_COLUMN
 import com.example.beloo.foodnixtest.storage.image.ImageEntity.Companion.PRODUCER_ID_COLUMN
+import com.example.beloo.foodnixtest.storage.image.ImageEntity.Companion.PATH_COLUMN
 import com.example.beloo.foodnixtest.storage.producer.ProducerEntity
 
 @Entity(
@@ -16,10 +16,11 @@ import com.example.beloo.foodnixtest.storage.producer.ProducerEntity
             parentColumns = [ID_COLUMN],
             childColumns = [PRODUCER_ID_COLUMN],
             onDelete = ForeignKey.CASCADE
-        )]
+        )],
+    primaryKeys = [PRODUCER_ID_COLUMN, PATH_COLUMN]
 )
 data class ImageEntity(
-    @PrimaryKey
+    @ColumnInfo(name = PATH_COLUMN)
     override val path: String,
 
     override val position: Int,
@@ -30,5 +31,6 @@ data class ImageEntity(
 
     companion object {
         const val PRODUCER_ID_COLUMN = "producer_id"
+        const val PATH_COLUMN = "path"
     }
 }

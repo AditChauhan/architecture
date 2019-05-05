@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface UseCaseModule {
+internal interface UseCaseModule {
     @Binds
     fun producersUseCase(useCase: ProducersListUseCaseImpl): ProducersListUseCase
 }

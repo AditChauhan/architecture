@@ -12,7 +12,7 @@ import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
 
-class Application : Application(), HasActivityInjector {
+class FoodApp : Application(), HasActivityInjector {
 
 	@Inject
 	internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -32,7 +32,7 @@ class Application : Application(), HasActivityInjector {
 	fun componentFactory(): ComponentFactory = componentFactory
 
 	companion object {
-		private lateinit var instance: com.example.beloo.foodnixtest.Application
-		fun instance(): com.example.beloo.foodnixtest.Application = instance
+		private lateinit var instance: com.example.beloo.foodnixtest.FoodApp
+		fun instance(): com.example.beloo.foodnixtest.FoodApp = instance
 	}
 }

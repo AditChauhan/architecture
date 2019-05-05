@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:name="com.example.beloo.foodnixtest.Application"
+        android:name="com.example.beloo.foodnixtest.FoodApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"

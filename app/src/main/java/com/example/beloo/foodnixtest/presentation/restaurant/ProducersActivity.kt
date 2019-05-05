@@ -35,8 +35,6 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
         }
     }
 
-    override fun getPostCode(): String? = etLocation.text.toString()
-
     override fun setData(producers: List<Producer>) {
         vEmpty.visibility = if (producers.isEmpty()) View.VISIBLE else View.GONE
         itemAdapter.removeAll()
@@ -52,6 +50,5 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
     }
 
     override fun setPostCode(postCode: String) {
-        etLocation.setText(postCode)
     }
 }

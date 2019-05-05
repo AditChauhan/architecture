@@ -1,5 +1,6 @@
 package com.example.beloo.foodnixtest.data.repository.producer
 
+import com.example.beloo.foodnixtest.core.rx.RxIO
 import com.example.beloo.foodnixtest.data.model.producer.Producer
 import com.example.beloo.foodnixtest.network.producer.ProducerDataSource
 import com.example.beloo.foodnixtest.storage.producer.ProducerDao
@@ -19,6 +20,7 @@ interface ProducersRepository {
 
 class ProducersDataRepositoryImpl @Inject constructor(
     private val dataSource: ProducerDataSource,
+    @RxIO
     private val io: Scheduler,
     private val entityMapper: ProducerEntityMapper,
     private val dao: ProducerDao
@@ -28,7 +30,7 @@ class ProducersDataRepositoryImpl @Inject constructor(
         .getProducers(page)
         .observeOn(io)
         .map { list -> list.map { entityMapper.map(it) } }
-        .flatMap { dao.put(it).andThen(Single.just(it)) }
+        .flatMap { dao.putAsync(it).andThen(Single.just(it)) }
         .map { it.isEmpty() }
 
     override fun producersStream(): Observable<List<Producer>> = dao
