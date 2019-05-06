@@ -14,6 +14,8 @@ class ProducersPresenter @Inject constructor(
 
 	override fun onReady() {
 		observeProducers()
+		//todo undo
+		onLoadNextPage()
 	}
 
 	private fun observeProducers() {
@@ -33,11 +35,13 @@ class ProducersPresenter @Inject constructor(
 	}
 
 	override fun onLoadNextPage() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		producersListUseCase.loadProducersChunk(0)
+			.subscribeManaged(TAG_PRODUCERS_CHUNK)
 	}
 
 	companion object {
 		private const val TAG_PRODUCERS = "producers"
+		private const val TAG_PRODUCERS_CHUNK = "producers_chunk"
 	}
 
 }

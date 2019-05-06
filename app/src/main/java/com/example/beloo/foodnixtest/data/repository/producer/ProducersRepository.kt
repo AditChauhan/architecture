@@ -1,7 +1,9 @@
 package com.example.beloo.foodnixtest.data.repository.producer
 
+import android.util.Log
 import com.example.beloo.foodnixtest.core.rx.RxIO
 import com.example.beloo.foodnixtest.data.model.producer.Producer
+import com.example.beloo.foodnixtest.language.TAG
 import com.example.beloo.foodnixtest.network.producer.ProducerDataSource
 import com.example.beloo.foodnixtest.storage.producer.ProducerDao
 import com.example.beloo.foodnixtest.storage.producer.ProducerEntityMapper
@@ -30,12 +32,16 @@ class ProducersDataRepositoryImpl @Inject constructor(
         .getProducers(page)
         .observeOn(io)
         .map { list -> list.map { entityMapper.map(it) } }
-        .flatMap { dao.putAsync(it).andThen(Single.just(it)) }
+        .flatMap {
+            Log.d(TAG, "store producers, count = ${it.count()}")
+            dao.putAsync(it).andThen(Single.just(it))
+        }
         .map { it.isEmpty() }
 
     override fun producersStream(): Observable<List<Producer>> = dao
         .producersStream()
         .subscribeOn(io)
+        .doOnNext { Log.d(TAG, "producers updated, count = ${it.count()}") }
         .map { it.map { item -> item as Producer } }
 
 }
