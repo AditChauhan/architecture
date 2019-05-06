@@ -22,9 +22,9 @@ abstract class ProducerDao {
         item.images.forEach { put(it) }
     }
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun put(dialog: ImageEntity): Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun put(dialog: ImageEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun put(tag: ProducerEntity): Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun put(tag: ProducerEntity)
 }

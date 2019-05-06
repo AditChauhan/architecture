@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.example.beloo.foodnixtest.BuildConfig
 import com.example.beloo.foodnixtest.network.producer.ProducersApi
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -47,6 +48,7 @@ class NetworkApiModule {
 			loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
 			builder.addInterceptor(loggingInterceptor)
+				.addNetworkInterceptor(StethoInterceptor())
 		}
 
 		val cookieManager = CookieManager()

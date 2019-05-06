@@ -6,6 +6,7 @@ import android.app.Application
 import com.example.beloo.foodnixtest.core.injection.ComponentCreator
 import com.example.beloo.foodnixtest.core.injection.ComponentFactory
 import com.example.beloo.foodnixtest.core.injection.ComponentProvider
+import com.facebook.stetho.Stetho
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -23,6 +24,10 @@ class FoodApp : Application(), HasActivityInjector {
 
 	override fun onCreate() {
 		super.onCreate()
+
+		if (BuildConfig.DEBUG) {
+			Stetho.initializeWithDefaults(this)
+		}
 
 		instance = this
 		componentFactory = ComponentProvider(ComponentCreator(this))
