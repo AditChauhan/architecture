@@ -1,8 +1,8 @@
 package com.example.beloo.foodnixtest.presentation
 
-import com.example.beloo.foodnixtest.presentation.restaurant.ProducersActivity
+import com.example.beloo.foodnixtest.presentation.producers.ProducersActivity
 import com.example.beloo.foodnixtest.core.injection.ActivityScope
-import com.example.beloo.foodnixtest.presentation.restaurant.RestaurantsPresentationModule
+import com.example.beloo.foodnixtest.presentation.producers.RestaurantsPresentationModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule

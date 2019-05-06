@@ -1,4 +1,4 @@
-package com.example.beloo.foodnixtest.presentation.restaurant
+package com.example.beloo.foodnixtest.presentation.producers
 
 import com.example.beloo.foodnixtest.core.injection.ActivityScope
 import com.example.beloo.foodnixtest.domain.producer.ProducersListUseCase
@@ -36,7 +36,8 @@ class ProducersPresenter @Inject constructor(
 
 	override fun onLoadNextPage() {
 		producersListUseCase.loadProducersChunk(0)
-			.subscribeManaged(TAG_PRODUCERS_CHUNK)
+			.subscribe()
+//			.subscribeManaged(TAG_PRODUCERS_CHUNK)
 	}
 
 	companion object {

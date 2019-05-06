@@ -7,7 +7,6 @@ import com.example.beloo.foodnixtest.language.TAG
 import com.example.beloo.foodnixtest.network.producer.ProducerDataSource
 import com.example.beloo.foodnixtest.storage.producer.ProducerDao
 import com.example.beloo.foodnixtest.storage.producer.ProducerEntityMapper
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -34,7 +33,7 @@ class ProducersDataRepositoryImpl @Inject constructor(
         .map { list -> list.map { entityMapper.map(it) } }
         .flatMap {
             Log.d(TAG, "store producers, count = ${it.count()}")
-            dao.putAsync(it).andThen(Single.just(it))
+            dao.put(it).andThen(Single.just(it))
         }
         .map { it.isEmpty() }
 

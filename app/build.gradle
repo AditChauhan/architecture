@@ -93,9 +93,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-core:$JACKSON_VERSION"
     implementation "com.fasterxml.jackson.core:jackson-annotations:$JACKSON_VERSION"
     implementation "com.fasterxml.jackson.core:jackson-databind:$JACKSON_VERSION"
-    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:$JACKSON_VERSION") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
-    }
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$JACKSON_VERSION"
     //endregion [jackson]
     //region [okhttp]
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'

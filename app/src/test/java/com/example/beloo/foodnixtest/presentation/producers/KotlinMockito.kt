@@ -1,4 +1,4 @@
-package com.example.beloo.foodnixtest.presentation.restaurant
+package com.example.beloo.foodnixtest.presentation.producers
 
 import org.mockito.Mockito
 

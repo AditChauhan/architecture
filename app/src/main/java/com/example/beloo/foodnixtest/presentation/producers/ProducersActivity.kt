@@ -1,4 +1,4 @@
-package com.example.beloo.foodnixtest.presentation.restaurant
+package com.example.beloo.foodnixtest.presentation.producers
 
 import android.os.Bundle
 import android.view.View

@@ -13,17 +13,13 @@ abstract class ProducerDao {
     @Query("SELECT * FROM ProducerEntity")
     abstract fun producersStream(): Observable<List<CompleteProducerEntity>>
 
-    fun putAsync(items: List<CompleteProducerEntity>): Completable = Completable
-        .fromAction { put(items) }
+    fun put(items: List<CompleteProducerEntity>): Completable = Completable
+        .fromAction { items.forEach { put(it) } }
 
     @Transaction
-    open fun put(items: List<CompleteProducerEntity>) {
-        items
-            .onEach {
-                put(it.producer)
-            }
-            .flatMap { it.images }
-            .forEach { put(it) }
+    open fun put(item: CompleteProducerEntity) {
+        put(item.producer)
+        item.images.forEach { put(it) }
     }
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
