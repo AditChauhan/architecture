@@ -13,7 +13,7 @@ interface ProducersContract {
 
     interface View : BaseView {
         fun setData(producers: List<Producer>)
-        fun setPostCode(postCode: String)
+        fun setItemsLoadedCompletely()
     }
 
     interface Router

@@ -11,6 +11,6 @@ interface ProducersApi {
     @GET(ServerContract.Producers.PRODUCERS)
     fun getProducers(
         @Query("page") page: Int,
-        @Query("per_page_limit") perPageLimit: Int = 20): Single<ProducersListPoJo>
+        @Query("per_page_limit") perPageLimit: Int = 10): Single<ProducersListPoJo>
 
 }
