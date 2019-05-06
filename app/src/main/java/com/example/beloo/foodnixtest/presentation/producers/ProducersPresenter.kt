@@ -38,6 +38,7 @@ class ProducersPresenter @Inject constructor(
 
     override fun onLoadNextPage() {
         if (isSubscribed(TAG_PRODUCERS_CHUNK)) return
+        view.showProgress()
         producersListUseCase.loadProducersChunk(page)
             .subscribeManaged(
                 TAG_PRODUCERS_CHUNK,

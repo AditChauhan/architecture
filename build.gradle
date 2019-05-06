@@ -27,7 +27,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven{url "https://github.com/shaubert/maven-repo/raw/master/releases"}
     }
 }
 

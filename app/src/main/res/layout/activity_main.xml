@@ -20,18 +20,18 @@
             app:title="@string/producers"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:indeterminateOnly="true"
-            />
-
     </com.google.android.material.appbar.AppBarLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="?android:actionBarSize"
+        android:indeterminateOnly="true"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"

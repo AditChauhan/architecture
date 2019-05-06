@@ -1,23 +1,17 @@
 package com.example.beloo.foodnixtest.presentation.util.recyclerView
 
-
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
  * @param offsetItemsCount offset of items count until end of list to request loading next page
- * @param footer View which will be attached to footerContainer when next page would start loading
- * @param footerContainer some container which could set and remove footer
  * @param totalItemsCount set total of items with which scrolled items count will be compared to start request loading next page
  */
-class RecyclerViewPaginationListener private constructor(
+class RecyclerViewPaginationListener constructor(
     private val layoutManager: LinearLayoutManager,
-    private val onLoadNextListener: OnLoadNextListener? = null,
-    private val offsetItemsCount: Int = 0,
-    private val footer: View? = null,
-    private val footerContainer: FooterContainer? = null,
-    private var totalItemsCount: Int? = null
+    private val onLoadNext: (()->Unit)? = null,
+    private val offsetItemsCount: Int = 4,
+    var totalItemsCount: Int? = null
 ) : RecyclerView.OnScrollListener() {
 
     private var isLoadingNextPage: Boolean = false
@@ -25,13 +19,9 @@ class RecyclerViewPaginationListener private constructor(
 
     /**
      * @param isLoadingNextPage when this flag is set scrollListener doesn't call [OnLoadNextListener.onLoadNext].
-     * Also removes footer from list if == false
      */
     fun setIsLoadingNextPage(isLoadingNextPage: Boolean) {
         this.isLoadingNextPage = isLoadingNextPage
-        if (!isLoadingNextPage && footer != null && footerContainer != null) {
-            footerContainer.removeFooter()
-        }
     }
 
     /**
@@ -60,22 +50,10 @@ class RecyclerViewPaginationListener private constructor(
             val scrolledItemsCount = visibleItemCount + lastVisibleItems
 
             if (scrolledItemsCount >= loadNextPageItemsCount && !isLoadingNextPage && !isFinishedLoading) {
-                if (footer != null && footerContainer != null) {
-                    footerContainer.setFooter(footer)
-                }
-
-                onLoadNextListener?.onLoadNext()
+                onLoadNext?.invoke()
+                setIsLoadingNextPage(true)
             }
         }
     }
 
-    interface OnLoadNextListener {
-        fun onLoadNext()
-    }
-
-    interface FooterContainer {
-        fun setFooter(footer: View)
-
-        fun removeFooter()
-    }
 }

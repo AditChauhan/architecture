@@ -6,8 +6,7 @@ import com.example.beloo.foodnixtest.R
 import com.example.beloo.foodnixtest.data.model.producer.Producer
 import com.example.beloo.foodnixtest.presentation.PresentationActivity
 import com.example.beloo.foodnixtest.presentation.util.recyclerView.FactoryAdapter
-import com.shaubert.ui.adapters.Direction
-import com.shaubert.ui.adapters.RecyclerEndlessAdapter
+import com.example.beloo.foodnixtest.presentation.util.recyclerView.RecyclerViewPaginationListener
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -19,52 +18,51 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
     @Inject
     lateinit var presenter: ProducersContract.Presenter
 
-    private lateinit var endlessAdapter: RecyclerEndlessAdapter
-
     private val itemAdapter: FactoryAdapter<Producer> =
         FactoryAdapter(ProducerViewHolderFactory())
+
+    private lateinit var paginationListener: RecyclerViewPaginationListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        endlessAdapter = RecyclerEndlessAdapter(itemAdapter).apply {
-            pendingResource = R.layout.hidden_progress
-            setLoadingCallback { presenter.onLoadNextPage() }
-            setEnabled(Direction.END, true)
-            setEnabled(Direction.START, false)
-            setRemainingPercentOfItemsToStartLoading(0.2f)
-        }
+        val manager = androidx.recyclerview.widget.LinearLayoutManager(
+            this@ProducersActivity,
+            androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+            false
+        )
+
+        paginationListener = RecyclerViewPaginationListener(
+            layoutManager = manager,
+            onLoadNext = {
+                presenter.onLoadNextPage()
+            },
+            offsetItemsCount = 5
+        )
 
         rvList.apply {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
-                this@ProducersActivity,
-                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
-                false
-            )
+            layoutManager = manager
+            addOnScrollListener(paginationListener)
             adapter = itemAdapter
         }
     }
 
     override fun setItemsLoadedCompletely() {
-        endlessAdapter.setAdapterIsFull()
-    }
-
-    override fun showError(throwable: Throwable) {
-        super.showError(throwable)
-        endlessAdapter.onError()
+        paginationListener.setLoadingFinished()
     }
 
     override fun setData(producers: List<Producer>) {
+        paginationListener.totalItemsCount = producers.size
         vEmpty.visibility = if (producers.isEmpty()) View.VISIBLE else View.GONE
         itemAdapter.removeAll()
         itemAdapter.addAll(producers)
     }
 
     override fun hideProgress() {
+        paginationListener.setIsLoadingNextPage(false)
         progressBar.visibility = View.GONE
-        endlessAdapter.onDataReady()
     }
 
     override fun showProgress() {
