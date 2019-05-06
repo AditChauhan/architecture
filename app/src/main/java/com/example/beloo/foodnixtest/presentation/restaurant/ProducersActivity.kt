@@ -18,7 +18,7 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
     lateinit var presenter: ProducersContract.Presenter
 
     private val itemAdapter: FactoryAdapter<Producer> =
-        FactoryAdapter(RestaurantViewHolderFactory())
+        FactoryAdapter(ProducerViewHolderFactory())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

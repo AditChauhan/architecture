@@ -13,3 +13,6 @@ interface Producer {
 
     val images: List<Image>
 }
+
+val Producer.firstImage: Image?
+    get() = images.firstOrNull()
