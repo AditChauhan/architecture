@@ -84,14 +84,24 @@ dependencies {
     implementation "androidx.annotation:annotation:$ANDROID_X_VERSION"
 
     //region [network]
-    implementation('com.squareup.retrofit2:retrofit:2.1.0') {
-        exclude module: 'okhttp'
+    //region [retrofit]
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-jackson:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
+    //endregion [retrofit]
+    //region [jackson]
+    implementation "com.fasterxml.jackson.core:jackson-core:$JACKSON_VERSION"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$JACKSON_VERSION"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$JACKSON_VERSION"
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:$JACKSON_VERSION") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-reflect'
     }
+    //endregion [jackson]
+    //region [okhttp]
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    //endregion [okhttp]
     //endregion [network]
 
     //region [database]

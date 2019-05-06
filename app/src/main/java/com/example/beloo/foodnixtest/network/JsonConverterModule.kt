@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.Version
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 import dagger.Module
 import dagger.Provides
@@ -19,18 +20,15 @@ class JsonConverterModule {
 		val module = SimpleModule("", Version.unknownVersion())
 
 		//jackson object mapper setup
-		val objectMapper = ObjectMapper()
-		objectMapper.registerModule(module)
-		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
-
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
-		return objectMapper
+		return ObjectMapper()
+			.registerModule(module)
+			.registerKotlinModule()
+			.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 	}
 
 	@Provides
-	internal fun provideJacksonConverterFactory(objectMapper: ObjectMapper): Converter.Factory {
-		return JacksonConverterFactory.create(objectMapper)
-	}
+	internal fun provideJacksonConverterFactory(objectMapper: ObjectMapper): Converter.Factory =
+		JacksonConverterFactory.create(objectMapper)
 
 }
