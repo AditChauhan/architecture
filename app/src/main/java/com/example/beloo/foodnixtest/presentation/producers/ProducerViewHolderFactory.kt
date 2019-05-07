@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.beloo.foodnixtest.R
 import com.example.beloo.foodnixtest.data.model.producer.Producer
 import com.example.beloo.foodnixtest.data.model.producer.firstImage
+import com.example.beloo.foodnixtest.language.trimInvisible
 import com.example.beloo.foodnixtest.presentation.util.recyclerView.BindViewHolder
 import com.example.beloo.foodnixtest.presentation.util.recyclerView.ViewHolderFactory
 import kotlinx.android.synthetic.main.item_producer.view.*
@@ -66,7 +67,7 @@ private class ProducerItem(view: View) : BindViewHolder<Producer>(view) {
         tvShortDescription.apply {
             text = item.shortDescription
             visibility =
-                if (tvShortDescription.text.isEmpty()) View.GONE else View.VISIBLE
+                if (item.shortDescription.trimInvisible().isEmpty()) View.GONE else View.VISIBLE
         }
     }
 
