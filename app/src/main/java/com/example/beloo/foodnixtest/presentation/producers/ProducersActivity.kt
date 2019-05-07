@@ -2,6 +2,8 @@ package com.example.beloo.foodnixtest.presentation.producers
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.beloo.foodnixtest.R
 import com.example.beloo.foodnixtest.data.model.producer.Producer
 import com.example.beloo.foodnixtest.presentation.PresentationActivity
@@ -18,8 +20,10 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
     @Inject
     lateinit var presenter: ProducersContract.Presenter
 
+    private var viewHolderFactory = ProducerViewHolderFactory()
+
     private val itemAdapter: FactoryAdapter<Producer> =
-        FactoryAdapter(ProducerViewHolderFactory())
+        FactoryAdapter(viewHolderFactory, diffUtil = viewHolderFactory.createDiffUtilCallback())
 
     private lateinit var paginationListener: RecyclerViewPaginationListener
 
@@ -28,9 +32,9 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val manager = androidx.recyclerview.widget.LinearLayoutManager(
-            this@ProducersActivity,
-            androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+        val manager = LinearLayoutManager(
+            this,
+            RecyclerView.VERTICAL,
             false
         )
 
@@ -56,8 +60,7 @@ class ProducersActivity : PresentationActivity(), ProducersContract.View {
     override fun setData(producers: List<Producer>) {
         paginationListener.totalItemsCount = producers.size
         vEmpty.visibility = if (producers.isEmpty()) View.VISIBLE else View.GONE
-        itemAdapter.removeAll()
-        itemAdapter.addAll(producers)
+        itemAdapter.submitList(producers)
     }
 
     override fun hideProgress() {

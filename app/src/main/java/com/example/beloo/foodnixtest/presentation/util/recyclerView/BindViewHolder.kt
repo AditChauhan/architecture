@@ -1,7 +1,7 @@
 package com.example.beloo.foodnixtest.presentation.util.recyclerView
 
-import androidx.annotation.CallSuper
 import android.view.View
+import androidx.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -12,7 +12,7 @@ abstract class BindViewHolder<T>(view : View) : androidx.recyclerview.widget.Rec
         private set
 
     @CallSuper
-    override fun bindItem(item: T) {
+    override fun bindItem(item: T, payloads: List<Any>) {
         this.item = item
     }
 

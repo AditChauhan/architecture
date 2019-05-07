@@ -2,6 +2,7 @@ package com.example.beloo.foodnixtest.data.model.producer
 
 import com.example.beloo.foodnixtest.data.model.image.Image
 
+/** producer implementation should implement [Any.equals] to work with recycler adapters */
 interface Producer {
     val id: Int
 

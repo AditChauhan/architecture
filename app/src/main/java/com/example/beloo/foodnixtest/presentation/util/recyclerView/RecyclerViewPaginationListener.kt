@@ -40,19 +40,17 @@ class RecyclerViewPaginationListener constructor(
     }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        if (dy > 0) { //check for scroll down
-            val visibleItemCount = layoutManager.childCount
-            val totalItemsCount: Int =
-                if (this.totalItemsCount == null) layoutManager.itemCount else this.totalItemsCount!!
-            val loadNextPageItemsCount = totalItemsCount - offsetItemsCount
-            val lastVisibleItems = layoutManager.findFirstVisibleItemPosition()
+        val visibleItemCount = layoutManager.childCount
+        val totalItemsCount: Int =
+            if (this.totalItemsCount == null) layoutManager.itemCount else this.totalItemsCount!!
+        val loadNextPageItemsCount = totalItemsCount - offsetItemsCount
+        val lastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-            val scrolledItemsCount = visibleItemCount + lastVisibleItems
+        val scrolledItemsCount = visibleItemCount + lastVisibleItems
 
-            if (scrolledItemsCount >= loadNextPageItemsCount && !isLoadingNextPage && !isFinishedLoading) {
-                onLoadNext?.invoke()
-                setIsLoadingNextPage(true)
-            }
+        if (scrolledItemsCount >= loadNextPageItemsCount && !isLoadingNextPage && !isFinishedLoading) {
+            onLoadNext?.invoke()
+            setIsLoadingNextPage(true)
         }
     }
 
