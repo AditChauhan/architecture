@@ -33,6 +33,7 @@ private class ProducerItem(view: View): BindViewHolder<Producer>(view) {
         }
         tvName.text = item.name
         tvShortDescription.text = item.shortDescription
+        tvShortDescription.visibility = if (tvShortDescription.text.isEmpty()) View.GONE else View.VISIBLE
     }
 
 }
