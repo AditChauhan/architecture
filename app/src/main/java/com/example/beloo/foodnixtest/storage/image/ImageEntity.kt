@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import com.example.beloo.foodnixtest.data.model.image.Image
 import com.example.beloo.foodnixtest.storage.ID_COLUMN
-import com.example.beloo.foodnixtest.storage.image.ImageEntity.Companion.PRODUCER_ID_COLUMN
 import com.example.beloo.foodnixtest.storage.image.ImageEntity.Companion.PATH_COLUMN
+import com.example.beloo.foodnixtest.storage.image.ImageEntity.Companion.PRODUCER_ID_COLUMN
 import com.example.beloo.foodnixtest.storage.producer.ProducerEntity
 
 @Entity(

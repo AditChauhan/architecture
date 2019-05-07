@@ -1,9 +1,11 @@
 package com.example.beloo.foodnixtest
 
 import androidx.room.Room
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
 import com.example.beloo.foodnixtest.storage.AppDatabase
+import com.example.beloo.foodnixtest.storage.image.ImageEntity
+import com.example.beloo.foodnixtest.storage.producer.CompleteProducerEntity
 import com.example.beloo.foodnixtest.storage.producer.ProducerDao
 import com.example.beloo.foodnixtest.storage.producer.ProducerEntity
 import org.junit.After
@@ -14,7 +16,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class EnityReadWriteTest {
+class ProducerDaoIntegrationTest {
     private lateinit var producerDao: ProducerDao
     private lateinit var db: AppDatabase
 
@@ -35,15 +37,24 @@ class EnityReadWriteTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeUserAndReadInList() {
+    fun write_and_read_same_composite_producer() {
         val producer = ProducerEntity(
             12,
             "detail",
             shortDescription = "abc",
             description = "blablabla"
         )
-        producerDao.put(producer)
-        val todoItem = producerDao.producersStream().blockingFirst().first()
-        assertEquals(producer.id, todoItem.id)
+        val image = ImageEntity(
+            "image/somewhere",
+            1,
+            12
+        )
+        val completeProducer = CompleteProducerEntity(
+            producer,
+            listOf(image)
+        )
+        producerDao.put(listOf(completeProducer)).subscribe()
+        val actual = producerDao.producersStream().blockingFirst().first()
+        assertEquals(completeProducer, actual)
     }
 }
