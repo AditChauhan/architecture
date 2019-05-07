@@ -16,8 +16,9 @@ class ProducersPresenter @Inject constructor(
 
     override fun onReady() {
         observeProducers()
-        //todo undo
-        onLoadNextPage()
+        if (page == 0) {
+            onLoadNextPage()
+        }
     }
 
     private fun observeProducers() {

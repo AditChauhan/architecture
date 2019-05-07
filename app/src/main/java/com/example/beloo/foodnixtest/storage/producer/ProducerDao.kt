@@ -10,7 +10,7 @@ import io.reactivex.Observable
 abstract class ProducerDao {
 
     @Transaction
-    @Query("SELECT * FROM ProducerEntity")
+    @Query("SELECT * FROM ProducerEntity ORDER BY name")
     abstract fun producersStream(): Observable<List<CompleteProducerEntity>>
 
     fun put(items: List<CompleteProducerEntity>): Completable = Completable
