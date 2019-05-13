@@ -17,14 +17,14 @@ abstract class ProducerDao {
         .fromAction { items.forEach { put(it) } }
 
     @Transaction
-    open fun put(item: CompleteProducerEntity) {
+    protected open fun put(item: CompleteProducerEntity) {
         put(item.producer)
         item.images.forEach { put(it) }
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun put(dialog: ImageEntity)
+    protected abstract fun put(dialog: ImageEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun put(tag: ProducerEntity)
+    protected abstract fun put(tag: ProducerEntity)
 }
